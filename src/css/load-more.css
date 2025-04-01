@@ -1,0 +1,22 @@
+.load-more {
+  margin: 32px auto;
+  border-radius: 8px;
+  padding: 8px 16px;
+  width: 125px;
+  height: 40px;
+  background: #4e75ff;
+
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #fff;
+  border: none;
+  display: block;
+}
+button:hover {
+  background: #6c8cff;
+}
+.hidden {
+  display: none;
+}
