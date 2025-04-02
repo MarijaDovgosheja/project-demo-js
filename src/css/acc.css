@@ -1,0 +1,60 @@
+.accordion {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
+
+.accordion-item {
+  border-bottom: 1px solid #ccc;
+}
+
+/* .accordion-header {
+  width: 100%;
+  background: #333;
+  color: white;
+  border: none;
+  text-align: left;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+} */
+
+.accordion-content {
+  display: none;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.accordion-item.is-active .accordion-content {
+  display: block;
+}
+
+.accordion-header {
+  display: flex; /* Вирівнюємо текст і іконку в ряд */
+  justify-content: space-between; /* Розташовуємо елементи по краях */
+  align-items: center; /* Вирівнюємо по центру по вертикалі */
+  width: 100%; /* Розтягуємо кнопку */
+  padding: 10px 15px; /* Відступи */
+  background: #222; /* Фон кнопки */
+  color: #fff; /* Колір тексту */
+  border: none;
+  cursor: pointer;
+}
+
+.icon img {
+  border: 1px solid rgba(250, 250, 250, 0.2);
+  border-radius: 100px;
+  padding: 10px;
+  width: 40px;
+  height: 40px;
+  width: 12px; /* Регулюємо розмір іконки */
+  height: 8px;
+  transition: transform 0.3s ease; /* Додаємо анімацію */
+}
+
+/* Повертаємо іконку вниз при відкритті акордеону */
+.accordion-header.active .icon img {
+  transform: rotate(180deg);
+}

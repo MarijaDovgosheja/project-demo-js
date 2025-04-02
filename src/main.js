@@ -1,75 +1,31 @@
-import { fetchImages } from './js/pixabay-api.js';
-import iziToast from 'izitoast';
-import 'izitoast/dist/css/iziToast.min.css';
+import Accordion from 'accordion-js';
+import 'accordion-js/dist/accordion.min.css';
 
-import {
-  renderImages,
-  clearGallery,
-  showLoader,
-  hideLoader,
-  showLoadMore,
-  hideLoadMore,
-  smoothScroll,
-} from './js/render-functions.js';
+// document.addEventListener('DOMContentLoaded', function () {
+//   new Accordion('.accordion', {
+//     duration: 300, // Час анімації
+//     showMultiple: false, // Тільки один відкритий елемент одночасно
+//     collapse: true, // Закриває відкритий елемент при натисканні
+//   });
+// });
+document.addEventListener('DOMContentLoaded', function () {
+  const accordionHeaders = document.querySelectorAll('.accordion-header');
 
-const form = document.querySelector('.form');
-const loadMoreBtn = document.querySelector('.load-more');
-
-let query = '';
-let page = 1;
-let totalHits = 0;
-
-form.addEventListener('submit', async event => {
-  event.preventDefault();
-
-  query = event.target.elements['search-text'].value.trim();
-  if (!query) return;
-
-  page = 1;
-  clearGallery();
-  hideLoadMore();
-  showLoader();
-
-  try {
-    const data = await fetchImages(query, page);
-    totalHits = data.totalHits;
-    renderImages(data.hits);
-
-    if (totalHits > 15) {
-      showLoadMore();
-    }
-  } catch (error) {
-    console.error('Error:', error);
-  } finally {
-    hideLoader();
-    event.target.reset();
-  }
-});
-
-loadMoreBtn.addEventListener('click', async () => {
-  page += 1;
-  showLoader();
-  hideLoadMore();
-
-  try {
-    const data = await fetchImages(query, page);
-    renderImages(data.hits);
-    smoothScroll();
-
-    if (page * 15 >= totalHits) {
-      hideLoadMore();
-      iziToast.info({
-        message: "We're sorry, but you've reached the end of search results.",
-        messageColor: '#fff',
-        backgroundColor: '#4e75ff',
-        position: 'topRight',
+  accordionHeaders.forEach(header => {
+    header.addEventListener('click', function () {
+      const content = this.nextElementSibling;
+      const isActive = content.style.display === 'block';
+      // Закриваємо всі відкриті акордеони (якщо потрібно)
+      document.querySelectorAll('.accordion-content').forEach(item => {
+        item.style.display = 'none';
+        item.previousElementSibling.classList.remove('active'); // Видаляємо клас 'active' у всіх кнопок
       });
-    } else {
-      showLoadMore();
-    }
-  } catch (error) {
-    console.error('Error:', error);
-  } finally {
-    hideLoader();
-  }
+
+      // Перемикаємо поточний
+      if (!isActive) {
+        content.style.display = 'block';
+        this.classList.add('active'); // Додаємо клас 'active' при відкритті
+      }
+    });
+  });
 });
